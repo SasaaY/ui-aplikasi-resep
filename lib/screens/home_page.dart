@@ -1,229 +1,330 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:ui_rplikasi_resep_masakan/constants/colors.dart';
+import 'package:ui_rplikasi_resep_masakan/screens/detail_page.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final List<bool> _isSelected = [true, false, false];
+  List<Container> daftarMakanan = [];
+  var itemMakanan = [
+    {
+      "nama": "Salad Sayur",
+      "gambar": "sate.png",
+      "category": "Appetizer",
+      "bahan": [
+        "- 2 Buah Alpukat",
+        "- 1 Ikat Sayur Selada",
+        "- 2 Buah Tomat",
+        "- 1 Buah Timun",
+        "- 1/4 Buah Paprika Kuning dan Merah",
+        "- 200ml Greek Yoghurt Classic",
+        "- 4 Sdm Mayones",
+        "- 1 Sachet Kental Manis",
+        "- 2 Sdm Madu",
+        "- 1 Buah Jeruk Lemon",
+        "- 1 Sdt Parutan Kulit Jeruk Lemon",
+        "- Sejumput Parsley Kering",
+      ],
+      "langkah": [
+        "1. Cuci bersih semua sayuran dan potong sesuai selera.",
+        "2. Campurkan Greek Yoghurt, Mayones, Kental Manis, dan Madu dalam mangkuk, aduk hingga merata.",
+        "3. Tambahkan perasan jeruk lemon dan parutan kulit jeruk lemon, aduk lagi.",
+        "4. Masukkan sayuran yang sudah dipotong ke dalam campuran saus, aduk hingga tercampur sempurna.",
+        "5. Taburkan parsley kering di atasnya sebagai hiasan.",
+        "6. Sajikan dingin.",
+      ],
+    },
+    {
+      "nama": "Soto Lamongan",
+      "gambar": "soto.jpg",
+      "category": "Main Course",
+      "bahan": [
+        "- 500g Daging Sapi",
+        "- 2 Liter Air",
+        "- 3 Siung Bawang Putih",
+      ],
+      "langkah": [
+        "1. Rebus daging hingga empuk.",
+        "2. Tumis bumbu, lalu masukkan ke dalam kuah.",
+      ],
+    },
+  ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _buatDataListMakanan();
+  }
+
+  void _buatDataListMakanan() {
+    for (var i = 0; i < itemMakanan.length; i++) {
+      final dataMakanan = itemMakanan[i];
+      final String? gambarMakanan = dataMakanan['gambar'] as String?;
+      final String? namaMakanan = dataMakanan['nama'] as String?;
+
+      daftarMakanan.add(
+        Container(
+          padding: const EdgeInsets.all(10),
+          child: RecipeCard(
+            title: namaMakanan!,
+            imagePath: 'assets/$gambarMakanan',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailScreen(
+                    nama: namaMakanan,
+                    gambar: gambarMakanan!,
+                    bahan: dataMakanan['bahan'] as List<String>,
+                    langkah: dataMakanan['langkah'] as List<String>,
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    String selectedCategory = _isSelected[0]
+        ? 'Appetizer'
+        : _isSelected[1]
+        ? 'Main Course'
+        : 'Dessert';
+    List<Container> filteredRecipes = daftarMakanan.where((container) {
+      var data = itemMakanan[daftarMakanan.indexOf(container)];
+      return data['category'] == selectedCategory;
+    }).toList();
+
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Color(0xFFABDCB4), Colors.white],
-            ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [AppColors.lightGreen.withOpacity(0.5), AppColors.white],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'L’Atelier du Chef\n',
-                        style: GoogleFonts.ubuntu(
-                          color: const Color(0xFF02470E),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          shadows: [
-                            Shadow(
-                              offset: Offset(0, 5),
-                              blurRadius: 5,
-                              color: Color(0xFF000000).withOpacity(0.25),
-                            ),
-                          ],
-                        ),
-                      ),
-                      TextSpan(
-                        text: 'BENGKEL SI KOKI',
-                        style: GoogleFonts.ubuntu(
-                          color: const Color(0xFF02470E),
-                          fontSize: 11,
-                          fontWeight: FontWeight.w500,
-                          shadows: [
-                            Shadow(
-                              offset: Offset(0, 5),
-                              blurRadius: 5,
-                              color: Color(0xFF000000).withOpacity(0.25),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+        ),
+        child: Column(
+          children: [
+            AppBar(
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'L\'Atelier du Chef',
+                    style: TextStyle(color: AppColors.darkGreen),
                   ),
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Cari Resep...',
-                    prefixIcon: Container(
-                      width: 25,
-                      height: 24,
-                      margin: const EdgeInsets.only(left: 8, right: 8),
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("Search.png"),
-                          fit: BoxFit.contain, // Correct usage
-                        ),
-                      ),
-                    ),
-                    hintStyle: const TextStyle(
-                      color: Color(0xFF6B6666),
-                      fontSize: 14,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w500,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50),
-                      borderSide: const BorderSide(width: 2, color: Color(0x28575454)),
-                    ),
+                  Text(
+                    'BENGKELSI KOKI',
+                    style: TextStyle(color: AppColors.darkGreen, fontSize: 12),
                   ),
+                ],
+              ),
+              backgroundColor: AppColors.lightGreen.withOpacity(0.5),
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.add, color: AppColors.darkGreen),
+                  onPressed: () {},
                 ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    buildCategoryButton('Appetizer', 'sate.png'),
-                    buildCategoryButton('Main Course', 'sate.png'),
-                    buildCategoryButton('Dessert', 'sate.png'),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Recommended Recipe',
-                  style: GoogleFonts.ubuntu(
-                    color: const Color(0xFF524D4D),
-                    fontSize: 24,
-                    fontWeight: FontWeight.w500,
-                    shadows: [
-                      Shadow(
-                        offset: Offset(0, 5),
-                        blurRadius: 5,
-                        color: Color(0xFF000000).withOpacity(0.25),
-                      ),
-                    ],
-                  ),
-                ),
-                const Divider(color: Color(0xFF02470E)),
-                const SizedBox(height: 8),
-                GridView.count(
-                  crossAxisCount: 2,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  mainAxisSpacing: 16,
-                  crossAxisSpacing: 16,
-                  children: [
-                    buildRecipeCard('Salad Sayur', 'sate.png'),
-                    buildRecipeCard('Soto Lamongan', 'sate.png'),
-                    buildRecipeCard('Ayam Bakar', 'sate.png'),
-                    buildRecipeCard('Pancake', 'sate.png'),
-                    buildRecipeCard('Sate Ayam', 'sate.png'),
-                    buildRecipeCard('Ikan Bakar', 'sate.png'),
-                  ],
+                IconButton(
+                  icon: Icon(Icons.menu, color: AppColors.darkGreen),
+                  onPressed: () {},
                 ),
               ],
             ),
-          ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Cari Resep...',
+                  hintStyle: TextStyle(color: AppColors.mediumGray),
+                  prefixIcon: Icon(Icons.search, color: AppColors.mediumGray),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(color: AppColors.mediumGray),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(color: AppColors.darkGreen),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 8.0,
+                vertical: 8.0,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CategoryButton(
+                    title: 'Appetizer',
+                    imagePath: 'assets/sate.png',
+                    isSelected: _isSelected[0],
+                    onPressed: () => setState(() {
+                      for (var i = 0; i < _isSelected.length; i++) {
+                        _isSelected[i] = false;
+                      }
+                      _isSelected[0] = true;
+                    }),
+                  ),
+                  CategoryButton(
+                    title: 'Main Course',
+                    imagePath: 'assets/sate.png',
+                    isSelected: _isSelected[1],
+                    onPressed: () => setState(() {
+                      for (var i = 0; i < _isSelected.length; i++) {
+                        _isSelected[i] = false;
+                      }
+                      _isSelected[1] = true;
+                    }),
+                  ),
+                  CategoryButton(
+                    title: 'Dessert',
+                    imagePath: 'assets/sate.png',
+                    isSelected: _isSelected[2],
+                    onPressed: () => setState(() {
+                      for (var i = 0; i < _isSelected.length; i++) {
+                        _isSelected[i] = false;
+                      }
+                      _isSelected[2] = true;
+                    }),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 8.0,
+                  mainAxisSpacing: 8.0,
+                  children: filteredRecipes,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
+}
 
-  Widget buildCategoryButton(String title, String imageUrl) {
-    return Container(
-      width: 125,
-      height: 42,
-      decoration: ShapeDecoration(
-        color: const Color(0xFF8FC499),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
+class CategoryButton extends StatelessWidget {
+  final String title;
+  final String imagePath;
+  final bool isSelected;
+  final VoidCallback onPressed;
+
+  const CategoryButton({
+    super.key,
+    required this.title,
+    required this.imagePath,
+    required this.isSelected,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: isSelected
+            ? AppColors.lightGreen
+            : AppColors.lightGreen.withOpacity(0.5),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            width: 43,
-            height: 43,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(imageUrl),
-                fit: BoxFit.contain, // Correct usage
-              ),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              title,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 14,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+          Image.asset(imagePath, height: 30, width: 30, fit: BoxFit.cover),
+          SizedBox(width: 8),
+          Text(
+            title,
+            style: TextStyle(color: AppColors.darkGreen, fontSize: 12),
           ),
         ],
       ),
     );
   }
+}
 
-  Widget buildRecipeCard(String title, String imageUrl) {
-    return Container(
-      decoration: ShapeDecoration(
-        color: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        shadows: const [
-          BoxShadow(
-            color: Color(0x3F000000),
-            blurRadius: 4,
-            offset: Offset(0, 4),
-          ),
-        ],
+class RecipeCard extends StatelessWidget {
+  final String title;
+  final String imagePath;
+  final VoidCallback onTap;
+
+  const RecipeCard({
+    super.key,
+    required this.title,
+    required this.imagePath,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadiusGeometry.circular(10),
       ),
-      child: Column(
-        children: [
-          Container(
-            height: 142,
-            decoration: ShapeDecoration(
-              image: DecorationImage(
-                image: AssetImage(imageUrl),
-                fit: BoxFit.contain, // Correct usage
+      elevation: 2,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(10),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: AppColors.white,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                  child: Image.asset(
+                    imagePath,
+                    fit: BoxFit.contain,
+                    width: double.infinity,
+                    height: 80,
+                  ),
+                ),
               ),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                Container(
-                  width: 37,
-                  height: 27,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('https://placehold.co/37x27'),
-                      fit: BoxFit.contain, // Correct usage
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.darkGreen,
+                      ),
                     ),
-                  ),
+                    SizedBox(width: 5),
+                    Icon(Icons.bookmark, color: AppColors.darkGreen, size: 16),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
