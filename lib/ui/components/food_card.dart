@@ -24,7 +24,7 @@ class _FoodCardState extends State<FoodCard> {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      elevation: 2,
+      elevation: 4,
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -59,14 +59,16 @@ class _FoodCardState extends State<FoodCard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.recipe.title,
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Text(
+                        widget.recipe.title,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    SizedBox(width: 10),
+                    SizedBox(width: 50),
                     IconButton(
                       onPressed: () {
                         setState(() {
@@ -75,6 +77,7 @@ class _FoodCardState extends State<FoodCard> {
                       },
                       icon: Icon(
                         _isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                        size: 30,
                       ),
                     ),
                   ],

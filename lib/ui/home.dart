@@ -11,7 +11,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String selectedCategory = 'All';
+  RecipeCategory selectedCategory = RecipeCategory.all;
 
   @override
   Widget build(BuildContext context) {
@@ -61,19 +61,8 @@ class _HomeScreenState extends State<HomeScreen> {
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Wrap(
+              spacing: 12,
               children: [
-                MenuCategoryButton(
-                  category: MenuCategoryModel(
-                    title: 'All',
-                    image: 'images/sate.png',
-                  ),
-                  onCategorySelected: (category) {
-                    setState(() {
-                      selectedCategory = category;
-                    });
-                  },
-                ),
-                SizedBox(width: 12),
                 ...MenuCategoryModel.category.map(
                   (category) => MenuCategoryButton(
                     category: category,

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ui_rplikasi_resep_masakan/ui/models/menu_category.dart';
+import 'package:ui_rplikasi_resep_masakan/ui/models/recipe_model.dart';
 
 class MenuCategoryButton extends StatefulWidget {
   final MenuCategoryModel category;
-  final Function(String) onCategorySelected;
+  final Function(RecipeCategory) onCategorySelected;
 
   const MenuCategoryButton({
     Key? key,
@@ -24,12 +25,13 @@ class _MenuCategoryButtonState extends State<MenuCategoryButton> {
         setState(() {
           _isSelected = !_isSelected;
         });
+        widget.onCategorySelected(widget.category.title);
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.green,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-        elevation: 2
+        elevation: 2,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -39,19 +41,19 @@ class _MenuCategoryButtonState extends State<MenuCategoryButton> {
               widget.category.image,
               height: 40,
               width: 40,
-              fit: BoxFit.cover,
+              fit: BoxFit.contain,
             ),
           ),
-          const SizedBox(width: 12,),
+          const SizedBox(width: 12),
           Text(
-            widget.category.title,
+            widget.category.title.label,
             style: const TextStyle(
               color: Colors.black,
               fontSize: 16,
-              fontWeight: FontWeight.bold
+              fontWeight: FontWeight.bold,
             ),
-            semanticsLabel: widget.category.title,
-          )
+            semanticsLabel: widget.category.title.label,
+          ),
         ],
       ),
     );
