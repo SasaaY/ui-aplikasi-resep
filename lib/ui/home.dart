@@ -3,6 +3,7 @@ import 'package:ui_rplikasi_resep_masakan/ui/components/food_card.dart';
 import 'package:ui_rplikasi_resep_masakan/ui/components/menu_category_button.dart';
 import 'package:ui_rplikasi_resep_masakan/ui/models/menu_category.dart';
 import 'package:ui_rplikasi_resep_masakan/ui/models/recipe_model.dart';
+import 'package:ui_rplikasi_resep_masakan/ui/screens/settings.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,13 +12,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  RecipeCategory selectedCategory = RecipeCategory.all;
+  RecipeCategory? _selectedCategory;
+
+  void _handleCategory(RecipeCategory newCategory) {
+    setState(() {
+      _selectedCategory = (_selectedCategory == newCategory)
+          ? null
+          : newCategory;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final List<RecipeModel> displayedRecipes = selectedCategory == 'All'
+    final List<RecipeModel> displayedRecipes = _selectedCategory == null
         ? RecipeModel.recipes
-        : RecipeModel.getByCategory(selectedCategory);
+        : RecipeModel.getByCategory(_selectedCategory!);
 
     return Scaffold(
       appBar: AppBar(
@@ -37,7 +46,15 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           IconButton(icon: const Icon(Icons.add), onPressed: () {}),
-          IconButton(icon: const Icon(Icons.menu), onPressed: () {}),
+          IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsScreen()),
+              );
+            },
+          ),
         ],
       ),
       body: Column(
@@ -66,11 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ...MenuCategoryModel.category.map(
                   (category) => MenuCategoryButton(
                     category: category,
-                    onCategorySelected: (category) {
-                      setState(() {
-                        selectedCategory = category;
-                      });
-                    },
+                    selectedCategory: _selectedCategory,
+                    onCategorySelected: _handleCategory,
                   ),
                 ),
                 SizedBox(width: 20),

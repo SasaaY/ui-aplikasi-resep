@@ -1,34 +1,28 @@
+// menu_category_button.dart
 import 'package:flutter/material.dart';
 import 'package:ui_rplikasi_resep_masakan/ui/models/menu_category.dart';
 import 'package:ui_rplikasi_resep_masakan/ui/models/recipe_model.dart';
 
-class MenuCategoryButton extends StatefulWidget {
+class MenuCategoryButton extends StatelessWidget {
   final MenuCategoryModel category;
-  final Function(RecipeCategory) onCategorySelected;
+  final RecipeCategory? selectedCategory;
+  final ValueChanged<RecipeCategory> onCategorySelected;
 
   const MenuCategoryButton({
     Key? key,
     required this.category,
+    required this.selectedCategory,
     required this.onCategorySelected,
   }) : super(key: key);
 
   @override
-  State<MenuCategoryButton> createState() => _MenuCategoryButtonState();
-}
-
-class _MenuCategoryButtonState extends State<MenuCategoryButton> {
-  bool _isSelected = false;
-  @override
   Widget build(BuildContext context) {
+    final isSelected = category.title == selectedCategory;
+
     return ElevatedButton(
-      onPressed: () {
-        setState(() {
-          _isSelected = !_isSelected;
-        });
-        widget.onCategorySelected(widget.category.title);
-      },
+      onPressed: () => onCategorySelected(category.title),
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.green,
+        backgroundColor: isSelected ? Colors.green : Colors.lightGreen,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
         elevation: 2,
@@ -38,7 +32,7 @@ class _MenuCategoryButtonState extends State<MenuCategoryButton> {
         children: [
           ClipOval(
             child: Image.asset(
-              widget.category.image,
+              category.image,
               height: 40,
               width: 40,
               fit: BoxFit.contain,
@@ -46,13 +40,13 @@ class _MenuCategoryButtonState extends State<MenuCategoryButton> {
           ),
           const SizedBox(width: 12),
           Text(
-            widget.category.title.label,
+            category.title.label,
             style: const TextStyle(
               color: Colors.black,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
-            semanticsLabel: widget.category.title.label,
+            semanticsLabel: category.title.label,
           ),
         ],
       ),

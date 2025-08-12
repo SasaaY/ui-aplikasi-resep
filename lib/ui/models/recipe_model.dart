@@ -5,8 +5,7 @@ enum RecipeCategory {
   appetizer,
   mainCourse,
   dessert,
-  cake,
-  all;
+  cake;
 
   String get label {
     switch (this) {
@@ -18,8 +17,6 @@ enum RecipeCategory {
         return 'Dessert';
       case RecipeCategory.cake:
         return 'Cake';
-      case RecipeCategory.all:
-        return 'All';
     }
   }
 }
@@ -45,7 +42,7 @@ class RecipeModel {
       title: "Sate Ayam",
       image: app_asset.sate,
       ingredients: ["1. ayam", "2. kacang", "3. kecap"],
-      steps: ["- bakar", "- tusuk", "- makan"],
+      steps: ["- bakar", "- tusuk", "- makan", "- minum"],
       category: RecipeCategory.appetizer,
     ),
     RecipeModel(
@@ -60,7 +57,7 @@ class RecipeModel {
       image: app_asset.sate,
       ingredients: ["1. sapi", "2. kacang", "3. kecap"],
       steps: ["- bakar", "- tusuk", "- makan"],
-      category: RecipeCategory.appetizer,
+      category: RecipeCategory.cake,
     ),
   ];
 
