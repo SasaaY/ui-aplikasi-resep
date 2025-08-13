@@ -80,13 +80,18 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Wrap(
               spacing: 12,
               children: [
-                ...MenuCategoryModel.category.map(
-                  (category) => MenuCategoryButton(
-                    category: category,
-                    selectedCategory: _selectedCategory,
-                    onCategorySelected: _handleCategory,
-                  ),
-                ),
+                ...MenuCategoryModel.category
+                    .where((category) {
+                      return _selectedCategory == null ||
+                          category.title == _selectedCategory;
+                    })
+                    .map(
+                      (category) => MenuCategoryButton(
+                        category: category,
+                        selectedCategory: _selectedCategory,
+                        onCategorySelected: _handleCategory,
+                      ),
+                    ),
                 SizedBox(width: 20),
               ],
             ),
@@ -100,7 +105,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   'Recommended Recipe',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                TextButton(onPressed: () {}, child: const Text('See All')),
+                TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    'See All',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
               ],
             ),
           ),

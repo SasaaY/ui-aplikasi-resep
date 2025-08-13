@@ -4,8 +4,8 @@ import 'package:ui_rplikasi_resep_masakan/ui/models/recipe_model.dart';
 
 class MenuCategoryModel {
   UniqueKey? id = UniqueKey();
-  RecipeCategory title;
-  String image;
+  final RecipeCategory title;
+  final String image;
 
   MenuCategoryModel({
     this.id,

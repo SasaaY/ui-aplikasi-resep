@@ -4,22 +4,46 @@ import 'package:ui_rplikasi_resep_masakan/ui/screens/notification.dart';
 
 class MenuSettingModel {
   UniqueKey? id = UniqueKey();
-  String title;
-  IconData? icon;
-  Route<dynamic> Function(BuildContext)? route;
+  final String title;
+  final IconData? icon;
+  final Route<dynamic> Function(BuildContext)? route;
+  final Map<String, dynamic>? content;
 
-  MenuSettingModel({this.id, this.title = "", this.icon, this.route});
+  MenuSettingModel({
+    this.id,
+    this.title = "",
+    this.icon,
+    this.route,
+    this.content,
+  });
 
   static List<MenuSettingModel> menuSetting = [
     MenuSettingModel(
-      title: "Language",
+      title: "Bahasa",
       icon: Icons.translate,
-      route: (_) => MaterialPageRoute(builder: (_) => const LanguagePage()),
+      route: (_) => MaterialPageRoute(
+        builder: (_) => const LanguagePage(initLanguage: "Indonesia"),
+      ),
+      content: {
+        "language": ["Indonesia", "Melayu", "Bonsaki", "China"],
+      },
     ),
     MenuSettingModel(
-      title: "Notification",
+      title: "Notifikasi",
       icon: Icons.notifications_none,
       route: (_) => MaterialPageRoute(builder: (_) => const NotificationPage()),
+      content: {
+        "notifikasi": [
+          {"title": "Reaksi", "enabled": false},
+          {"title": "Bookmark", "enabled": false},
+          {"title": "Komentar", "enabled": true},
+          {"title": "Sebutan", "enabled": false},
+          {"title": "System", "enabled": false},
+        ],
+      },
     ),
   ];
+
+  List<String> get languages =>
+      ((content?['language'] ?? []) as List).cast<String>();
 }

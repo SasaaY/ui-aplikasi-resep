@@ -39,7 +39,7 @@ class RecipeModel {
 
   static List<RecipeModel> recipes = [
     RecipeModel(
-      title: "Sate Ayam",
+      title: "Sate Ayamvjvhvjhv",
       image: app_asset.sate,
       ingredients: ["1. ayam", "2. kacang", "3. kecap"],
       steps: ["- bakar", "- tusuk", "- makan", "- minum"],

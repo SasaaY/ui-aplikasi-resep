@@ -1,4 +1,3 @@
-// menu_category_button.dart
 import 'package:flutter/material.dart';
 import 'package:ui_rplikasi_resep_masakan/ui/models/menu_category.dart';
 import 'package:ui_rplikasi_resep_masakan/ui/models/recipe_model.dart';
@@ -48,6 +47,10 @@ class MenuCategoryButton extends StatelessWidget {
             ),
             semanticsLabel: category.title.label,
           ),
+          if (isSelected) ...[
+            const SizedBox(width: 8),
+            const Icon(Icons.close, size: 18, color: Colors.black),
+          ],
         ],
       ),
     );
