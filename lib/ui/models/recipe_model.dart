@@ -39,7 +39,7 @@ class RecipeModel {
 
   static List<RecipeModel> recipes = [
     RecipeModel(
-      title: "Sate Ayamvjvhvjhv",
+      title: "Sate Ayam",
       image: app_asset.sate,
       ingredients: ["1. ayam", "2. kacang", "3. kecap"],
       steps: ["- bakar", "- tusuk", "- makan", "- minum"],
@@ -57,6 +57,30 @@ class RecipeModel {
       image: app_asset.sate,
       ingredients: ["1. sapi", "2. kacang", "3. kecap"],
       steps: ["- bakar", "- tusuk", "- makan"],
+      category: RecipeCategory.cake,
+    ),
+    RecipeModel(
+      title: "Wonton Chili Oil",
+      image: app_asset.wonton,
+      ingredients: [
+        "150 lembar Kulit pangsit tipis",
+        "2 kg ayam fillet",
+        "1 kg udang",
+        "2 kg sawi putih",
+        "100 gr sagu",
+        "5 sdm saos tiram",
+        "1 sdm merica bubuk",
+        "3 sdm bawang putih bubuk",
+        "Secukupnya garam",
+        "Secukupnya gula pasir",
+      ],
+      steps: [
+        "1.	Choper fillet daging ayam dan udang hingga halus, masukkan semua bahan aduk rata. Rajang tipis sawi putih lalu rebus sebentar dan tiriskan, peras rebusan sawi hingga tidak ada airnya, kemudian campurkan ke adonan ayam hingga rata. Icip hingga sesuai selera. Masukkan adonan ke dalam frezeer minimal 1 jam agar adonan lebih set",
+        "2.	Setelah adonan set, siapkan kulit pangsit yang tipis, ambil 1 sdm adonan lalu masukkan ke tengah tengah kulit pangsit kemudian bentuk, lem menggunakan air",
+        "3.	Adonan yang sudah dibentuk bisa di simpan dalam frezeer, rebus dalam air mendidih hingga mengambang, angkat lalu tiriskan.",
+        "4.	Siapkan chili oilnya campur saos cabai dan kecap aduk rata, lalu icip bumbu nya agar sesuai selera",
+        "5.	Masukkan rebusan wonton dalam mangkuk saosnya aduk rata, beri potongan daun bawang dan siap",
+      ],
       category: RecipeCategory.cake,
     ),
   ];

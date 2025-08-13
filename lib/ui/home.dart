@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ui_rplikasi_resep_masakan/ui/components/food_card.dart';
 import 'package:ui_rplikasi_resep_masakan/ui/components/menu_category_button.dart';
+import 'package:ui_rplikasi_resep_masakan/ui/getstart.dart';
 import 'package:ui_rplikasi_resep_masakan/ui/models/menu_category.dart';
+import 'package:ui_rplikasi_resep_masakan/ui/models/opsi_menu.dart';
 import 'package:ui_rplikasi_resep_masakan/ui/models/recipe_model.dart';
+import 'package:ui_rplikasi_resep_masakan/ui/screens/bookmark_recipe.dart';
+import 'package:ui_rplikasi_resep_masakan/ui/screens/profile_screen.dart';
 import 'package:ui_rplikasi_resep_masakan/ui/screens/settings.dart';
+import 'package:ui_rplikasi_resep_masakan/ui/screens/tambah_recipe.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -45,14 +50,58 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         actions: [
-          IconButton(icon: const Icon(Icons.add), onPressed: () {}),
           IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {
-              Navigator.push(
+            icon: const Icon(Icons.add),
+            onPressed: () async {
+              final result = await Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SettingsScreen()),
+                MaterialPageRoute(builder: (_) => const AddRecipeScreen()),
               );
+              if (result == true) {
+                setState(() {}); // Refresh list setelah kembali
+              }
+            },
+          ),
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.menu),
+            onSelected: (value) {
+              switch (value) {
+                case 'profile':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const ProfileScreen()),
+                  );
+                  break;
+                case 'bookmark':
+                  // 
+                  break;
+                case 'notification':
+                  // Navigasi ke halaman notifikasi
+                  break;
+                case 'settings':
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SettingsScreen()),
+                  );
+                  break;
+                case 'exit':
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Getstart()),
+                  );
+                  break;
+              }
+            },
+            itemBuilder: (BuildContext context) {
+              return OpsiMenu.opsiMenu.map((opsi) {
+                return PopupMenuItem<String>(
+                  value: opsi.value,
+                  child: ListTile(
+                    leading: Icon(opsi.icon),
+                    title: Text(opsi.title),
+                  ),
+                );
+              }).toList();
             },
           ),
         ],

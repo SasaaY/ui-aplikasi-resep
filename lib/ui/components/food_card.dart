@@ -78,6 +78,7 @@ class _FoodCardState extends State<FoodCard> {
                       },
                       icon: Icon(
                         _isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                        color: Colors.green,
                         size: 30,
                       ),
                     ),

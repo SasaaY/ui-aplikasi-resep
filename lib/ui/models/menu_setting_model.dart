@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ui_rplikasi_resep_masakan/ui/screens/language.dart';
-import 'package:ui_rplikasi_resep_masakan/ui/screens/notification.dart';
+import 'package:ui_rplikasi_resep_masakan/ui/screens/notification_setting.dart';
 
 class MenuSettingModel {
   UniqueKey? id = UniqueKey();
@@ -31,7 +31,7 @@ class MenuSettingModel {
     MenuSettingModel(
       title: "Notifikasi",
       icon: Icons.notifications_none,
-      route: (_) => MaterialPageRoute(builder: (_) => const NotificationPage()),
+      route: (_) => MaterialPageRoute(builder: (_) => const NotificationSetting()),
       content: {
         "notifikasi": [
           {"title": "Reaksi", "enabled": false},

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:ui_rplikasi_resep_masakan/ui/models/menu_setting_model.dart';
 
-class NotificationPage extends StatefulWidget {
-  const NotificationPage({super.key});
+class NotificationSetting extends StatefulWidget {
+  const NotificationSetting({super.key});
 
   @override
-  State<NotificationPage> createState() => _NotificationPageState();
+  State<NotificationSetting> createState() => _NotificationSettingState();
 }
 
-class _NotificationPageState extends State<NotificationPage> {
+class _NotificationSettingState extends State<NotificationSetting> {
   late final MenuSettingModel settingNotif;
   late final List<Map<String, dynamic>> items;
 
