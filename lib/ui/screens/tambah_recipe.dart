@@ -31,6 +31,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
   void _saveRecipe() {
     if (_formKey.currentState!.validate()) {
       final newRecipe = RecipeModel(
+        id: UniqueKey(),
         title: _titleController.text.trim(),
         image: _imageController.text.trim().isEmpty
             ? app_asset

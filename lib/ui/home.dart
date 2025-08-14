@@ -18,6 +18,21 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   RecipeCategory? _selectedCategory;
+  List<RecipeModel> bookmarkedRecipes = [];
+
+  void _toggleBookmark(RecipeModel recipe) {
+    setState(() {
+      if (bookmarkedRecipes.any((r) => r.id == recipe.id)) {
+        bookmarkedRecipes.removeWhere((r) => r.id == recipe.id);
+      } else {
+        bookmarkedRecipes.add(recipe);
+      }
+    });
+  }
+
+  bool _isBookmarked(RecipeModel recipe) {
+    return bookmarkedRecipes.any((r) => r.id == recipe.id);
+  }
 
   void _handleCategory(RecipeCategory newCategory) {
     setState(() {
@@ -73,7 +88,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                   break;
                 case 'bookmark':
-                  // 
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => BookmarkPage(
+                        bookmarks: bookmarkedRecipes,
+                        onRemoves: (recipe) {
+                          setState(() {
+                            bookmarkedRecipes.removeWhere(
+                              (r) => r.id == recipe.id,
+                            );
+                          });
+                        },
+                      ),
+                    ),
+                  );
                   break;
                 case 'notification':
                   // Navigasi ke halaman notifikasi
@@ -178,7 +207,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                     itemCount: displayedRecipes.length,
                     itemBuilder: (context, index) {
-                      return FoodCard(recipe: displayedRecipes[index]);
+                      final recipe = displayedRecipes[index];
+                      return FoodCard(
+                        recipe: recipe,
+                        isBookmarked: _isBookmarked(recipe),
+                        onBookmarkToggle: () => _toggleBookmark(recipe),
+                      );
                     },
                   ),
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ui_rplikasi_resep_masakan/ui/components/food_card.dart';
 import 'package:ui_rplikasi_resep_masakan/ui/models/recipe_model.dart';
+import 'package:ui_rplikasi_resep_masakan/ui/assets.dart' as app_assets;
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -28,7 +29,7 @@ class ProfileScreen extends StatelessWidget {
                 const CircleAvatar(
                   radius: 40,
                   backgroundImage: AssetImage(
-                    'assets/profil.png',
+                    app_assets.sate,
                   ), // Ganti dengan gambar pengguna
                 ),
                 const SizedBox(width: 16),
@@ -92,7 +93,11 @@ class ProfileScreen extends StatelessWidget {
               ),
               itemCount: myRecipes.length,
               itemBuilder: (context, index) {
-                return FoodCard(recipe: myRecipes[index]);
+                return FoodCard(
+                  recipe: myRecipes[index],
+                  isBookmarked: false,
+                  onBookmarkToggle: () {},
+                );
               },
             ),
           ],

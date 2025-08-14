@@ -27,39 +27,48 @@ class RecipeModel {
   List<String> ingredients;
   List<String> steps;
   RecipeCategory category;
+  bool isBookmarked;
 
   RecipeModel({
-    this.id,
+    required this.id,
     this.title = "",
     this.image = "",
     this.ingredients = const [],
     this.steps = const [],
     this.category = RecipeCategory.appetizer,
+    this.isBookmarked = false,
   });
 
   static List<RecipeModel> recipes = [
     RecipeModel(
+      id: UniqueKey(),
       title: "Sate Ayam",
       image: app_asset.sate,
       ingredients: ["1. ayam", "2. kacang", "3. kecap"],
       steps: ["- bakar", "- tusuk", "- makan", "- minum"],
       category: RecipeCategory.appetizer,
+      isBookmarked: false,
     ),
     RecipeModel(
+      id: UniqueKey(),
       title: "Sate Kambing",
       image: app_asset.sate,
       ingredients: ["1. kambing", "2. kacang", "3. kecap"],
       steps: ["- bakar", "- tusuk", "- makan"],
       category: RecipeCategory.dessert,
+      isBookmarked: false,
     ),
     RecipeModel(
+      id: UniqueKey(),
       title: "Sate Sapi",
       image: app_asset.sate,
       ingredients: ["1. sapi", "2. kacang", "3. kecap"],
       steps: ["- bakar", "- tusuk", "- makan"],
       category: RecipeCategory.cake,
+      isBookmarked: false,
     ),
     RecipeModel(
+      id: UniqueKey(),
       title: "Wonton Chili Oil",
       image: app_asset.wonton,
       ingredients: [
@@ -82,6 +91,7 @@ class RecipeModel {
         "5.	Masukkan rebusan wonton dalam mangkuk saosnya aduk rata, beri potongan daun bawang dan siap",
       ],
       category: RecipeCategory.cake,
+      isBookmarked: false,
     ),
   ];
 
