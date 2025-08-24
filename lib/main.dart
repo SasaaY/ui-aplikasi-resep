@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ui_rplikasi_resep_masakan/ui/home.dart';
+import 'package:ui_rplikasi_resep_masakan/ui/login.dart';
 import 'package:ui_rplikasi_resep_masakan/ui/models/menu_setting_model.dart';
 
 void main(List<String> args) {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.green),
-      home: HomeScreen(),
+      home: Login(),
     );
   }
 }
