@@ -34,8 +34,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
         id: UniqueKey(),
         title: _titleController.text.trim(),
         image: _imageController.text.trim().isEmpty
-            ? app_asset
-                  .sate // <-- gambar default
+            ? app_asset.sate // default image
             : _imageController.text.trim(),
         ingredients: _ingredientsController.text
             .split('\n')
@@ -51,7 +50,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
       );
 
       RecipeModel.recipes.add(newRecipe);
-      Navigator.pop(context, true); // true = ada perubahan
+      Navigator.pop(context, true);
     }
   }
 
@@ -60,7 +59,21 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Tambah Resep Baru'),
-        backgroundColor: Colors.lightGreen,
+        centerTitle: true,
+        // kasih gradient
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFFA5D6A7), // hijau muda
+                Colors.white, // nyatu ke background
+              ],
+            ),
+          ),
+        ),
+        elevation: 0, // biar halus nyambung
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -121,7 +134,7 @@ class _AddRecipeScreenState extends State<AddRecipeScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.lightGreen,
+                    backgroundColor: const Color(0xFFA5D6A7),
                     padding: const EdgeInsets.symmetric(vertical: 16),
                   ),
                   onPressed: _saveRecipe,

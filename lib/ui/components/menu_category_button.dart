@@ -21,7 +21,7 @@ class MenuCategoryButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: () => onCategorySelected(category.title),
       style: ElevatedButton.styleFrom(
-        backgroundColor: isSelected ? Colors.green : Colors.lightGreen,
+        backgroundColor: isSelected ? Color(0xFFA5D6A7) : Color(0xFFA5D6A7),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
         elevation: 2,
